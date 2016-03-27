@@ -13,8 +13,12 @@ public class Gravity : MonoBehaviour {
     [SerializeField]
 	private GravityState gravityState = GravityState.Earth;
 	private Vector2 currentGravity;
+    [SerializeField]
     private Vector2 moonGrav = new Vector2(0, -3.3f);
+    [SerializeField]
     private Vector2 earthGrav = new Vector2(0, -9.8f);
+    [SerializeField]
+    private float gravityScale = 1f;
 
     public GravityState GravityState
     {
@@ -26,11 +30,6 @@ public class Gravity : MonoBehaviour {
     {
         get { return currentGravity; }
         set { currentGravity = value; }
-    }
-
-    void Start()
-    {
-    	SetGravity(GravityState.Earth);
     }
 
     private void SetGravity(GravityState gstate)
@@ -51,8 +50,13 @@ public class Gravity : MonoBehaviour {
         }
     }
 
+    public void Start()
+    {
+        SetGravity(gravityState);
+    }
+
 	public void Apply(Rigidbody2D r)
     {
-        r.AddForce(Current);
+        r.AddForce(Current * gravityScale);
     }
 }
